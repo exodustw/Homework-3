@@ -196,7 +196,11 @@ class MeanVariancePortfolio:
                 # Sample Code: Initialize Decision w and the Objective
                 # NOTE: You can modify the following code
                 w = model.addMVar(n, name="w", ub=1)
-                model.setObjective(w.sum(), gp.GRB.MAXIMIZE)
+
+                model.addConstr(w >= 0, 'c1')
+                model.addConstr(w.sum() == 1, 'c2')
+
+                model.setObjective(w.transpose() @ mu - (gamma/2) *  w.transpose() @ Sigma @ w , gp.GRB.MAXIMIZE)
 
                 """
                 TODO: Complete Task 3 Below
