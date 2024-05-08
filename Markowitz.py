@@ -117,7 +117,10 @@ class RiskParityPortfolio:
         """
         TODO: Complete Task 2 Below
         """
-
+        for i in range(self.lookback + 1, len(df)):
+            R_n = df_returns.copy()[assets].iloc[i - self.lookback : i]
+            R_n_std_r = 1/R_n.std()
+            self.portfolio_weights.loc[df.index[i], assets] = R_n_std_r/R_n_std_r.sum()
         """
         TODO: Complete Task 2 Above
         """
